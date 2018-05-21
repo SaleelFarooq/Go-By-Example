@@ -1,0 +1,94 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int func(string array1[],char Q,vector<char> blocks,int nofblock)
+    {int i,j,m,n,p,q,dis1,dis2,res;
+    for(i=0;i<5;i++)
+            for(j=0;j<5;j++)
+                {if(array1[i][j]==Q)
+                        {m=i;
+                         n=j;
+                        }
+                }
+//cout<<m<<n<<"\n";
+if((m==0 && n==0)||(m==0 && n==4)||(m==4 && n==0)||(m==4 && n==4))
+    res=3;
+else if(m==0 || n==0 || m==4 || n==4)
+    res=5;
+else
+    res=8;
+for(int u=0;u<nofblock;u++)
+{
+for(i=0;i<5;i++)
+    for(j=0;j<5;j++)
+            {
+            if(array1[i][j]==blocks[u])
+                    {p=i;
+                    q=j;
+                    }
+            }
+//cout<<p<<q<<"\n";
+//cout<<res;
+dis1=m-p;
+if(dis1<0)
+    dis1=-1*dis1;
+dis2=n-q;
+if(dis2<0)
+    dis2=-1*dis2;
+
+/*if((dis1+dis2)<=2)
+   {if((dis1+dis2)==2 && (!(dis1==0 || dis2==0)))
+       res--;
+    else if(dis1+dis2<2)
+        res--;
+   }
+*/
+if(dis1==1 && dis2==1)
+        {res--;}
+else if((dis1==1 && dis2==0) || (dis1==0 && dis2==1))
+        {res--;}
+}
+return res;
+}
+
+int main()
+{ char pos,block;
+int nofblock,i;
+vector<char> blocks;
+vector<char> queens;
+ //int i,j,m,n,res,p,q,dis1,dis2,u,nofblock;
+  string array1[5]={"ABCDE","FGHIJ","KLMNO","PQRST","UVWXY"};
+  int testcases;
+  cin>>testcases;
+ // cout<<testcases;
+  while(testcases--)
+ {cin>>pos>>nofblock;
+ 
+ //cout<<pos<<" ";
+ //char blocks[nofblock];
+ //queens.push_back(pos);
+ for(i=0;i<nofblock;i++)
+        {cin>>block;
+        
+         blocks.push_back(block);
+        }
+/*for(i=0;i<nofblock;i++)
+        {cout<<blocks[i]<<" ";}
+*/
+//cout<<blocks.size();
+ cout<<func(array1,pos,blocks,blocks.size())<<"\n";
+}
+//cout<<queens.size()<<" "<<blocks.size()<<" "<<queens[1]<<"\n";
+//for(i=0;i<queens.size();i++)
+   // cout<<queens[i]<<" ";
+//for(i=0;i<queens.size();i++)
+     //  {cout<<func(array1,queens[i],blocks,blocks.size())<<"\n";}
+
+//for(i=0;i<testcases;i++)
+       // cout<<queens[i];
+ //}
+   return 0;
+}

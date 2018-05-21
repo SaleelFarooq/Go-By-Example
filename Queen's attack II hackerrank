@@ -1,0 +1,138 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<string> split_string(string);
+
+// Complete the queensAttack function below.
+int queensAttack(int n, int k, int r_q, int c_q, vector<vector<int>> obstacles) {
+//cout<<n<<k;
+//return obstacles[1][1];
+int dir1,dir2,dir3,dir4,dir5,dir6,dir7,dir8;
+dir1=n-(c_q);
+dir2=(c_q)-1;
+dir3=n-(r_q);
+dir4=(r_q)-1;
+if(dir4<dir1)
+        dir5=dir4;
+else
+        dir5=dir1;
+if(dir2<dir4)
+        dir6=dir2;
+else
+        dir6=dir4;
+if(dir1<dir3)
+        dir7=dir1;
+else
+        dir7=dir3;
+if(dir2<dir3)
+        dir8=dir2;
+else
+        dir8=dir3;
+int total=dir1+dir2+dir3+dir4+dir5+dir6+dir7+dir8;
+//return total;
+//return obstacles.size();
+int nofblocks=obstacles.size();
+int x,y,d,i;
+
+for(i=0;i<nofblocks;i++)
+        {x=obstacles[i][0];
+        y=obstacles[i][1];
+        if((x==r_q) && (y>c_q))
+                {d=y-(c_q)-1;
+                total=total-dir1+d;}
+         else if((x==r_q)&&(y<c_q))
+                {d=-1*(y-(c_q))-1;
+                total=total-dir2+d;}
+         else if((y==c_q)&&(x>r_q))
+                {d=x-(r_q)-1;
+                total=total-dir3+d;}
+         else if((y==c_q)&&(x<r_q))
+                {d=(-1*(x-(r_q)))-1;
+                total=total-dir4+d;}
+         else if(((r_q-x)==(y-c_q))&&(r_q-x>0))
+                {d=r_q-x-1;
+                total=total-dir5+d;}
+         else if(((r_q-x)==(c_q-y))&&(r_q-x>0))
+                {d=r_q-1-x;
+                 total=total-dir6+d;}
+         else if(((x-r_q)==(y-c_q))&&(x-r_q>0))
+               {d=x-r_q-1;
+                total=total-dir7+d;}
+         else if(((x-r_q)==(c_q-y))&&(x-r_q>0))
+               {d=x-r_q-1;
+                total=total-dir8+d;}
+        }
+return total;
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string nk_temp;
+    getline(cin, nk_temp);
+
+    vector<string> nk = split_string(nk_temp);
+
+    int n = stoi(nk[0]);
+
+    int k = stoi(nk[1]);
+
+    string r_qC_q_temp;
+    getline(cin, r_qC_q_temp);
+
+    vector<string> r_qC_q = split_string(r_qC_q_temp);
+
+    int r_q = stoi(r_qC_q[0]);
+
+    int c_q = stoi(r_qC_q[1]);
+
+    vector<vector<int>> obstacles(k);
+    for (int i = 0; i < k; i++) {
+        obstacles[i].resize(2);
+
+        for (int j = 0; j < 2; j++) {
+            cin >> obstacles[i][j];
+        }
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+
+    int result = queensAttack(n, k, r_q, c_q, obstacles);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
+
+vector<string> split_string(string input_string) {
+    string::iterator new_end = unique(input_string.begin(), input_string.end(), [] (const char &x, const char &y) {
+        return x == y and x == ' ';
+    });
+
+    input_string.erase(new_end, input_string.end());
+
+    while (input_string[input_string.length() - 1] == ' ') {
+        input_string.pop_back();
+    }
+
+    vector<string> splits;
+    char delimiter = ' ';
+
+    size_t i = 0;
+    size_t pos = input_string.find(delimiter);
+
+    while (pos != string::npos) {
+        splits.push_back(input_string.substr(i, pos - i));
+
+        i = pos + 1;
+        pos = input_string.find(delimiter, i);
+    }
+
+    splits.push_back(input_string.substr(i, min(pos, input_string.length()) - i + 1));
+
+    return splits;
+}

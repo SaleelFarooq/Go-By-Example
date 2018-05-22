@@ -1,0 +1,36 @@
+package main
+
+import "fmt"
+import "encoding/json"
+
+type addrtype struct{
+Housename string
+Pin int
+}
+type person struct{
+	Slno int 
+	Name string
+	Address addrtype 
+	Age int
+}
+
+func main() {
+					/*Use of type struct*/
+	s1:=person{1,"Aby",addrtype{"Mangalassery",234},21}
+						/*Nested Struct*/
+	fmt.Println(s1)
+	fmt.Printf("sl no %d is %s\n And he is %d years old\n",s1.Slno,s1.Name,s1.Age)
+	fmt.Printf("His address is given as House = %s and Pin=%d \n",s1.Address.Housename,s1.Address.Pin)
+	s1B,_:=json.Marshal(s1)
+					/*Use of JSON.Marshal ,first letter of variables in struct should be Capital*/
+	fmt.Println(string(s1B))
+	s2:=person{23,"Isco",addrtype{"Madrid,Spain",1123},25}
+	 s2B, _ := json.Marshal(s2)
+    	fmt.Println(string(s2B))
+					/*Mutability of struct type*/
+	s2.Slno=20
+	s2.Name="Asensio"
+	 s2B, _ = json.Marshal(s2)
+	fmt.Println(string(s2B))
+	
+}

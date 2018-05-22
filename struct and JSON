@@ -1,0 +1,29 @@
+package main
+
+import "fmt"
+import "encoding/json"
+
+
+type person struct{
+	Slno int 
+	Name string 
+	Age int
+}
+
+func main() {
+					/*Use of type struct*/
+	s1:=person{1,"Aby",21}
+	fmt.Println(s1)
+	s1B,_:=json.Marshal(s1)
+					/*Use of JSON.Marshal ,first letter of variables in struct should be Capital*/
+	fmt.Println(string(s1B))
+	var s2 person
+	s2=person{3,"Kiran",23}
+	fmt.Println(s2)
+	 s2B, _ := json.Marshal(s2)
+    	fmt.Println(string(s2B))
+					/*Mutability of struct type*/
+	s2.Slno=11
+	 s2B, _ = json.Marshal(s2)
+	fmt.Println(string(s2B))
+}
